@@ -72,7 +72,7 @@
   /* TABLE */
   .table-wrap { overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { background: var(--blue); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; position: sticky; top: 56px; z-index: 5; }
+  th { background: var(--blue); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
   td { padding: 9px 12px; border-bottom: 1px solid var(--border); }
   tr:hover td { background: #f8f9ff; }
   .badge {
@@ -151,7 +151,7 @@
   <button class="refresh-btn" onclick="refreshAll()">⟳ Refresh</button>
 </nav>
 
-<!-- CONFIG BANNER (shown until API URL is set) -->
+<!-- CONFIG BANNER -->
 <div id="config-banner" class="config-banner" style="margin:16px 24px; display:none;">
   <strong>⚙️ Setup needed:</strong> Paste your Google Apps Script Web App URL below, then click Save.<br><br>
   <input type="text" id="api-url-input" placeholder="https://script.google.com/macros/s/YOUR_ID/exec" style="width:500px; margin-right:8px;">
@@ -283,7 +283,6 @@
 var API_URL = 'https://script.google.com/macros/s/AKfycbzaUoPWAzuII6OLkw2xfC4FqVUVVd6lU7psUZjtTGgO5SQ4M8_1ujuBmxGEdxyhwVcEMg/exec';
 
 window.onload = function() {
-  // Set today's date in forms
   var today = new Date().toISOString().split('T')[0];
   document.getElementById('txn-date').value = today;
   document.getElementById('bj-date').value = today;
@@ -374,7 +373,6 @@ function renderDashboard(rows) {
     statCard('Low Stock', low, 'orange') +
     statCard('Out of Stock', outOfStock, 'red');
 
-  // Low stock table
   var lowRows = rows.filter(function(r){ return (r[4]||0) < 10; });
   var tbody = document.querySelector('#low-stock-table tbody');
   tbody.innerHTML = '';
@@ -450,13 +448,13 @@ function loadRegister() {
 
 // ── SUBMIT SUB TXN ────────────────────────────────────────────────────────────
 function submitSubTxn() {
-  var date     = document.getElementById('txn-date').value;
-  var txnType  = document.getElementById('txn-type').value;
-  var partSel  = document.getElementById('txn-part');
+  var date        = document.getElementById('txn-date').value;
+  var txnType     = document.getElementById('txn-type').value;
+  var partSel     = document.getElementById('txn-part');
   var subPartCode = partSel.value;
-  var qty      = document.getElementById('txn-qty').value;
-  var remarks  = document.getElementById('txn-remarks').value;
-  var msg      = document.getElementById('txn-msg');
+  var qty         = document.getElementById('txn-qty').value;
+  var remarks     = document.getElementById('txn-remarks').value;
+  var msg         = document.getElementById('txn-msg');
 
   if (!date || !subPartCode || !qty) {
     showMsg(msg, 'error', 'Please fill Date, Part, and Quantity.');
