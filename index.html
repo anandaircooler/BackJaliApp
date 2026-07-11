@@ -20,32 +20,42 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); }
 
-  /* NAV */
+  /* NAV — two rows */
   nav {
     background: var(--blue);
     color: #fff;
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 56px;
     position: sticky; top: 0; z-index: 100;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   }
-  nav .brand { font-size: 18px; font-weight: 700; letter-spacing: 0.5px; }
-  nav .tabs { display: flex; gap: 4px; }
+  nav .nav-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 48px;
+  }
+  nav .brand { font-size: 17px; font-weight: 700; letter-spacing: 0.5px; }
+  nav .refresh-btn {
+    background: rgba(255,255,255,0.15); border: none; color: #fff;
+    padding: 5px 14px; border-radius: 20px; cursor: pointer; font-size: 13px;
+    white-space: nowrap;
+  }
+  nav .refresh-btn:hover { background: rgba(255,255,255,0.25); }
+  nav .tabs {
+    display: flex;
+    padding: 0 16px 8px;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav .tabs::-webkit-scrollbar { display: none; }
   nav .tab {
-    padding: 6px 16px; border-radius: 20px; cursor: pointer;
+    padding: 5px 14px; border-radius: 20px; cursor: pointer;
     font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.75);
-    transition: all 0.2s;
+    transition: all 0.2s; white-space: nowrap; flex-shrink: 0;
   }
   nav .tab:hover { background: rgba(255,255,255,0.15); color: #fff; }
   nav .tab.active { background: rgba(255,255,255,0.25); color: #fff; }
-  nav .refresh-btn {
-    background: rgba(255,255,255,0.15); border: none; color: #fff;
-    padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 13px;
-  }
-  nav .refresh-btn:hover { background: rgba(255,255,255,0.25); }
 
   /* LAYOUT */
   .page { display: none; padding: 24px; max-width: 1200px; margin: 0 auto; }
@@ -75,14 +85,12 @@
   th { background: var(--blue); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
   td { padding: 9px 12px; border-bottom: 1px solid var(--border); }
   tr:hover td { background: #f8f9ff; }
-  .badge {
-    display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;
-  }
-  .badge.ok { background: #e6f4ea; color: var(--green); }
-  .badge.low { background: #fce8e6; color: var(--red); }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge.ok   { background: #e6f4ea; color: var(--green); }
+  .badge.low  { background: #fce8e6; color: var(--red); }
   .badge.warn { background: #fef7e0; color: #b07c00; }
-  .badge.in { background: #e6f4ea; color: var(--green); }
-  .badge.out { background: #fce8e6; color: var(--red); }
+  .badge.in   { background: #e6f4ea; color: var(--green); }
+  .badge.out  { background: #fce8e6; color: var(--red); }
 
   /* FORM */
   .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
@@ -94,10 +102,7 @@
     outline: none; transition: border 0.2s;
   }
   input:focus, select:focus { border-color: var(--blue); }
-  .btn {
-    padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer;
-    font-size: 13px; font-weight: 600; transition: all 0.2s;
-  }
+  .btn { padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
   .btn-primary { background: var(--blue); color: #fff; }
   .btn-primary:hover { background: var(--blue-light); }
   .btn-success { background: var(--green); color: #fff; }
@@ -105,7 +110,7 @@
   .form-actions { margin-top: 16px; display: flex; gap: 12px; align-items: center; }
   .msg { font-size: 13px; padding: 8px 14px; border-radius: 8px; display: none; }
   .msg.success { background: #e6f4ea; color: var(--green); display: block; }
-  .msg.error { background: #fce8e6; color: var(--red); display: block; }
+  .msg.error   { background: #fce8e6; color: var(--red); display: block; }
 
   /* CAPACITY */
   .capacity-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
@@ -126,37 +131,24 @@
 
   /* LOADING */
   .loader { text-align: center; padding: 40px; color: var(--muted); font-size: 14px; }
-
-  /* CONFIG banner */
-  .config-banner {
-    background: #fff3cd; border: 1px solid #ffc107; border-radius: 10px;
-    padding: 14px 18px; margin-bottom: 20px; font-size: 13px;
-  }
-  .config-banner strong { color: #856404; }
-  .config-banner code { background: #f8f9fa; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="brand">🏭 Back Jali Sub-Assembly</div>
-  <div class="tabs">
-    <div class="tab active" onclick="showPage('dashboard')">Dashboard</div>
-    <div class="tab" onclick="showPage('stock')">Stock</div>
-    <div class="tab" onclick="showPage('capacity')">Capacity</div>
-    <div class="tab" onclick="showPage('add-txn')">Add Stock</div>
-    <div class="tab" onclick="showPage('back-jali')">Back Jali OUT</div>
-    <div class="tab" onclick="showPage('register')">Register</div>
+  <div class="nav-top">
+    <div class="brand">🏭 Back Jali Sub-Assembly</div>
+    <button class="refresh-btn" onclick="refreshAll()">⟳ Refresh</button>
   </div>
-  <button class="refresh-btn" onclick="refreshAll()">⟳ Refresh</button>
+  <div class="tabs">
+    <div class="tab active" onclick="showPage('dashboard', this)">Dashboard</div>
+    <div class="tab" onclick="showPage('stock', this)">Stock</div>
+    <div class="tab" onclick="showPage('capacity', this)">Capacity</div>
+    <div class="tab" onclick="showPage('add-txn', this)">Add Stock</div>
+    <div class="tab" onclick="showPage('back-jali', this)">Back Jali OUT</div>
+    <div class="tab" onclick="showPage('register', this)">Register</div>
+  </div>
 </nav>
-
-<!-- CONFIG BANNER -->
-<div id="config-banner" class="config-banner" style="margin:16px 24px; display:none;">
-  <strong>⚙️ Setup needed:</strong> Paste your Google Apps Script Web App URL below, then click Save.<br><br>
-  <input type="text" id="api-url-input" placeholder="https://script.google.com/macros/s/YOUR_ID/exec" style="width:500px; margin-right:8px;">
-  <button class="btn btn-primary" onclick="saveApiUrl()">Save URL</button>
-</div>
 
 <!-- DASHBOARD -->
 <div id="page-dashboard" class="page active">
@@ -279,39 +271,22 @@
 </div>
 
 <script>
-// ── CONFIG ────────────────────────────────────────────────────────────────────
 var API_URL = 'https://script.google.com/macros/s/AKfycbzaUoPWAzuII6OLkw2xfC4FqVUVVd6lU7psUZjtTGgO5SQ4M8_1ujuBmxGEdxyhwVcEMg/exec';
 
 window.onload = function() {
   var today = new Date().toISOString().split('T')[0];
   document.getElementById('txn-date').value = today;
   document.getElementById('bj-date').value = today;
-
-  if (!API_URL) {
-    document.getElementById('config-banner').style.display = 'block';
-  } else {
-    refreshAll();
-  }
+  refreshAll();
 };
 
-function saveApiUrl() {
-  var url = document.getElementById('api-url-input').value.trim();
-  if (!url) return;
-  localStorage.setItem('backjali_api_url', url);
-  API_URL = url;
-  document.getElementById('config-banner').style.display = 'none';
-  refreshAll();
-}
-
-// ── NAVIGATION ────────────────────────────────────────────────────────────────
-function showPage(id) {
+function showPage(id, el) {
   document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
   document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
   document.getElementById('page-' + id).classList.add('active');
-  event.target.classList.add('active');
+  el.classList.add('active');
 }
 
-// ── API CALLS ─────────────────────────────────────────────────────────────────
 function apiGet(action, callback) {
   fetch(API_URL + '?action=' + action)
     .then(function(r) { return r.json(); })
@@ -320,16 +295,12 @@ function apiGet(action, callback) {
 }
 
 function apiPost(data, callback) {
-  fetch(API_URL, {
-    method: 'POST',
-    body: JSON.stringify(data)
-  })
+  fetch(API_URL, { method: 'POST', body: JSON.stringify(data) })
     .then(function(r) { return r.json(); })
     .then(callback)
     .catch(function(e) { console.error('POST error', e); });
 }
 
-// ── DATA CACHE ────────────────────────────────────────────────────────────────
 var cache = {};
 
 function refreshAll() {
@@ -339,7 +310,6 @@ function refreshAll() {
   loadRegister();
 }
 
-// ── STOCK ─────────────────────────────────────────────────────────────────────
 function loadStock() {
   apiGet('getStock', function(data) {
     if (data.error) return;
@@ -353,7 +323,7 @@ function renderStock(rows) {
   var tbody = document.querySelector('#stock-table tbody');
   tbody.innerHTML = '';
   rows.forEach(function(r) {
-    var code  = r[0], name = r[1], qIn = r[2]||0, qOut = r[3]||0, cur = r[4]||0;
+    var code = r[0], name = r[1], qIn = r[2]||0, qOut = r[3]||0, cur = r[4]||0;
     var status = cur <= 0 ? '<span class="badge low">Out of Stock</span>'
                : cur < 10 ? '<span class="badge warn">Low</span>'
                : '<span class="badge ok">OK</span>';
@@ -377,7 +347,7 @@ function renderDashboard(rows) {
   var tbody = document.querySelector('#low-stock-table tbody');
   tbody.innerHTML = '';
   if (lowRows.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="3" style="color:var(--green); text-align:center; padding:20px">✅ All parts adequately stocked</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="3" style="color:var(--green);text-align:center;padding:20px">✅ All parts adequately stocked</td></tr>';
   } else {
     lowRows.forEach(function(r) {
       var cur = r[4]||0;
@@ -391,7 +361,6 @@ function statCard(label, value, cls) {
   return '<div class="stat-card '+cls+'"><div class="label">'+label+'</div><div class="value">'+value+'</div></div>';
 }
 
-// ── CAPACITY ──────────────────────────────────────────────────────────────────
 function loadCapacity() {
   apiGet('getCapacity', function(data) {
     if (data.error) return;
@@ -405,7 +374,6 @@ function loadCapacity() {
   });
 }
 
-// ── MASTER (for dropdowns) ────────────────────────────────────────────────────
 function loadMaster() {
   apiGet('getMaster', function(data) {
     if (data.error) return;
@@ -416,7 +384,6 @@ function loadMaster() {
       sel.innerHTML += '<option value="'+r[0]+'">'+r[0]+' — '+r[1]+'</option>';
     });
   });
-
   apiGet('getCapacity', function(data) {
     if (data.error) return;
     var sel = document.getElementById('bj-part');
@@ -427,7 +394,6 @@ function loadMaster() {
   });
 }
 
-// ── REGISTER ─────────────────────────────────────────────────────────────────
 function loadRegister() {
   apiGet('getRegister', function(data) {
     if (data.error) return;
@@ -446,20 +412,15 @@ function loadRegister() {
   });
 }
 
-// ── SUBMIT SUB TXN ────────────────────────────────────────────────────────────
 function submitSubTxn() {
-  var date        = document.getElementById('txn-date').value;
-  var txnType     = document.getElementById('txn-type').value;
-  var partSel     = document.getElementById('txn-part');
-  var subPartCode = partSel.value;
-  var qty         = document.getElementById('txn-qty').value;
-  var remarks     = document.getElementById('txn-remarks').value;
-  var msg         = document.getElementById('txn-msg');
+  var date = document.getElementById('txn-date').value;
+  var txnType = document.getElementById('txn-type').value;
+  var subPartCode = document.getElementById('txn-part').value;
+  var qty = document.getElementById('txn-qty').value;
+  var remarks = document.getElementById('txn-remarks').value;
+  var msg = document.getElementById('txn-msg');
 
-  if (!date || !subPartCode || !qty) {
-    showMsg(msg, 'error', 'Please fill Date, Part, and Quantity.');
-    return;
-  }
+  if (!date || !subPartCode || !qty) { showMsg(msg, 'error', 'Please fill Date, Part, and Quantity.'); return; }
 
   apiPost({ action: 'addSubTxn', date: date, txnType: txnType, subPartCode: subPartCode, qty: qty, remarks: remarks }, function(res) {
     if (res.success) {
@@ -473,19 +434,14 @@ function submitSubTxn() {
   });
 }
 
-// ── SUBMIT BACK JALI TXN ─────────────────────────────────────────────────────
 function submitBackJaliTxn() {
-  var date    = document.getElementById('bj-date').value;
-  var partSel = document.getElementById('bj-part');
-  var code    = partSel.value;
-  var qty     = document.getElementById('bj-qty').value;
+  var date = document.getElementById('bj-date').value;
+  var code = document.getElementById('bj-part').value;
+  var qty = document.getElementById('bj-qty').value;
   var remarks = document.getElementById('bj-remarks').value;
-  var msg     = document.getElementById('bj-msg');
+  var msg = document.getElementById('bj-msg');
 
-  if (!date || !code || !qty) {
-    showMsg(msg, 'error', 'Please fill Date, Part, and Quantity.');
-    return;
-  }
+  if (!date || !code || !qty) { showMsg(msg, 'error', 'Please fill Date, Part, and Quantity.'); return; }
 
   apiPost({ action: 'addBackJaliTxn', date: date, mainPartCode: code, qty: qty, remarks: remarks }, function(res) {
     if (res.success) {
@@ -498,7 +454,6 @@ function submitBackJaliTxn() {
   });
 }
 
-// ── UTILS ─────────────────────────────────────────────────────────────────────
 function showMsg(el, type, text) {
   el.className = 'msg ' + type;
   el.textContent = text;
