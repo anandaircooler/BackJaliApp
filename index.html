@@ -20,35 +20,32 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); }
 
-  /* NAV — two rows */
+  /* NAV */
   nav {
     background: var(--blue);
     color: #fff;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
     position: sticky; top: 0; z-index: 100;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   }
-  nav .nav-top {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 24px; height: 48px;
-  }
-  nav .brand { font-size: 17px; font-weight: 700; letter-spacing: 0.5px; }
-  nav .refresh-btn {
-    background: rgba(255,255,255,0.15); border: none; color: #fff;
-    padding: 5px 14px; border-radius: 20px; cursor: pointer; font-size: 13px; white-space: nowrap;
-  }
-  nav .refresh-btn:hover { background: rgba(255,255,255,0.25); }
-  nav .tabs {
-    display: flex; padding: 0 16px 8px; gap: 4px;
-    overflow-x: auto; scrollbar-width: none;
-  }
-  nav .tabs::-webkit-scrollbar { display: none; }
+  nav .brand { font-size: 18px; font-weight: 700; letter-spacing: 0.5px; }
+  nav .tabs { display: flex; gap: 4px; }
   nav .tab {
-    padding: 5px 14px; border-radius: 20px; cursor: pointer;
+    padding: 6px 16px; border-radius: 20px; cursor: pointer;
     font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.75);
-    transition: all 0.2s; white-space: nowrap; flex-shrink: 0;
+    transition: all 0.2s;
   }
   nav .tab:hover { background: rgba(255,255,255,0.15); color: #fff; }
   nav .tab.active { background: rgba(255,255,255,0.25); color: #fff; }
+  nav .refresh-btn {
+    background: rgba(255,255,255,0.15); border: none; color: #fff;
+    padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 13px;
+  }
+  nav .refresh-btn:hover { background: rgba(255,255,255,0.25); }
 
   /* LAYOUT */
   .page { display: none; padding: 24px; max-width: 1200px; margin: 0 auto; }
@@ -64,27 +61,28 @@
     background: var(--card); border-radius: 12px; padding: 16px 20px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.08); border-left: 4px solid var(--blue);
   }
-  .stat-card.green  { border-color: var(--green); }
-  .stat-card.red    { border-color: var(--red); }
+  .stat-card.green { border-color: var(--green); }
+  .stat-card.red { border-color: var(--red); }
   .stat-card.orange { border-color: var(--orange); }
   .stat-card .label { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
   .stat-card .value { font-size: 28px; font-weight: 700; }
-  .stat-card.green .value  { color: var(--green); }
-  .stat-card.red .value    { color: var(--red); }
-  .stat-card.orange .value { color: #b07c00; }
+  .stat-card.green .value { color: var(--green); }
+  .stat-card.red .value { color: var(--red); }
 
   /* TABLE */
   .table-wrap { overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { background: var(--blue); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+  th { background: var(--blue); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; position: sticky; top: 56px; z-index: 5; }
   td { padding: 9px 12px; border-bottom: 1px solid var(--border); }
   tr:hover td { background: #f8f9ff; }
-  .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
-  .badge.ok   { background: #e6f4ea; color: var(--green); }
-  .badge.low  { background: #fce8e6; color: var(--red); }
+  .badge {
+    display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;
+  }
+  .badge.ok { background: #e6f4ea; color: var(--green); }
+  .badge.low { background: #fce8e6; color: var(--red); }
   .badge.warn { background: #fef7e0; color: #b07c00; }
-  .badge.in   { background: #e6f4ea; color: var(--green); }
-  .badge.out  { background: #fce8e6; color: var(--red); }
+  .badge.in { background: #e6f4ea; color: var(--green); }
+  .badge.out { background: #fce8e6; color: var(--red); }
 
   /* FORM */
   .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
@@ -92,10 +90,14 @@
   label { font-size: 12px; font-weight: 600; color: var(--muted); }
   input, select, textarea {
     padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px;
-    font-size: 13px; color: var(--text); background: #fff; outline: none; transition: border 0.2s;
+    font-size: 13px; color: var(--text); background: #fff;
+    outline: none; transition: border 0.2s;
   }
   input:focus, select:focus { border-color: var(--blue); }
-  .btn { padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
+  .btn {
+    padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer;
+    font-size: 13px; font-weight: 600; transition: all 0.2s;
+  }
   .btn-primary { background: var(--blue); color: #fff; }
   .btn-primary:hover { background: var(--blue-light); }
   .btn-success { background: var(--green); color: #fff; }
@@ -103,21 +105,19 @@
   .form-actions { margin-top: 16px; display: flex; gap: 12px; align-items: center; }
   .msg { font-size: 13px; padding: 8px 14px; border-radius: 8px; display: none; }
   .msg.success { background: #e6f4ea; color: var(--green); display: block; }
-  .msg.error   { background: #fce8e6; color: var(--red); display: block; }
+  .msg.error { background: #fce8e6; color: var(--red); display: block; }
 
-  /* CAPACITY / BJ SUMMARY */
-  .capacity-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+  /* CAPACITY */
+  .capacity-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
   .cap-card {
     background: var(--card); border-radius: 12px; padding: 18px 20px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.08); border-top: 4px solid var(--blue);
   }
   .cap-card.zero { border-color: var(--red); }
-  .cap-card.green-top { border-color: var(--green); }
   .cap-card .code { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
-  .cap-card .name { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+  .cap-card .name { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
   .cap-card .can-make { font-size: 36px; font-weight: 800; color: var(--blue); }
   .cap-card.zero .can-make { color: var(--red); }
-  .cap-card.green-top .can-make { color: var(--green); }
   .cap-card .unit { font-size: 12px; color: var(--muted); }
 
   /* SEARCH */
@@ -126,49 +126,56 @@
 
   /* LOADING */
   .loader { text-align: center; padding: 40px; color: var(--muted); font-size: 14px; }
+
+  /* CONFIG banner */
+  .config-banner {
+    background: #fff3cd; border: 1px solid #ffc107; border-radius: 10px;
+    padding: 14px 18px; margin-bottom: 20px; font-size: 13px;
+  }
+  .config-banner strong { color: #856404; }
+  .config-banner code { background: #f8f9fa; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="nav-top">
-    <div class="brand">🏭 Back Jali Sub-Assembly</div>
-    <button class="refresh-btn" onclick="refreshAll()">⟳ Refresh</button>
-  </div>
+  <div class="brand">🏭 Back Jali Sub-Assembly</div>
   <div class="tabs">
-    <div class="tab active" onclick="showPage('dashboard', this)">Dashboard</div>
-    <div class="tab" onclick="showPage('stock', this)">Stock</div>
-    <div class="tab" onclick="showPage('capacity', this)">Capacity</div>
-    <div class="tab" onclick="showPage('add-txn', this)">Add Stock</div>
-    <div class="tab" onclick="showPage('back-jali', this)">Back Jali OUT</div>
-    <div class="tab" onclick="showPage('register', this)">Register</div>
+    <div class="tab active" onclick="showPage('dashboard')">Dashboard</div>
+    <div class="tab" onclick="showPage('stock')">Stock</div>
+    <div class="tab" onclick="showPage('capacity')">Capacity</div>
+    <div class="tab" onclick="showPage('add-txn')">Add Stock</div>
+    <div class="tab" onclick="showPage('back-jali')">Back Jali OUT</div>
+    <div class="tab" onclick="showPage('register')">Register</div>
   </div>
+  <button class="refresh-btn" onclick="refreshAll()">⟳ Refresh</button>
 </nav>
+
+<!-- CONFIG BANNER (shown until API URL is set) -->
+<div id="config-banner" class="config-banner" style="margin:16px 24px; display:none;">
+  <strong>⚙️ Setup needed:</strong> Paste your Google Apps Script Web App URL below, then click Save.<br><br>
+  <input type="text" id="api-url-input" placeholder="https://script.google.com/macros/s/YOUR_ID/exec" style="width:500px; margin-right:8px;">
+  <button class="btn btn-primary" onclick="saveApiUrl()">Save URL</button>
+</div>
 
 <!-- DASHBOARD -->
 <div id="page-dashboard" class="page active">
-
-  <!-- Sub-part stock summary -->
   <div id="stat-grid" class="stat-grid">
     <div class="loader">Loading stats...</div>
   </div>
-
-  <!-- Finished BackJali summary -->
   <div class="card">
     <h2>✅ Finished Back Jali — Total Made / Produced</h2>
-    <div id="bj-summary-grid" class="capacity-grid" style="margin-bottom:20px;">
-      <div class="loader">Loading...</div>
-    </div>
-    <h2 style="margin-top:4px;">📋 Recently Produced</h2>
+    <div id="bj-total" class="loader">Loading...</div>
+  </div>
+  <div class="card">
+    <h2>📋 Recently Produced</h2>
     <div class="table-wrap">
-      <table id="bj-history-table">
+      <table id="bj-recent-table">
         <thead><tr><th>TxnID</th><th>Date</th><th>Part Code</th><th>Part Name</th><th>Qty</th><th>Remarks</th></tr></thead>
         <tbody><tr><td colspan="6" class="loader">Loading...</td></tr></tbody>
       </table>
     </div>
   </div>
-
-  <!-- Low stock alert -->
   <div class="card">
     <h2>⚠️ Low Stock Sub-Parts</h2>
     <div class="table-wrap">
@@ -245,7 +252,7 @@
 <div id="page-back-jali" class="page">
   <div class="card">
     <h2>🏗️ Back Jali Finished Goods OUT</h2>
-    <p style="font-size:13px; color:var(--muted); margin-bottom:16px;">Record when a completed Back Jali assembly is sent out.</p>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:16px;">Record when a completed Back Jali assembly is sent out. Sub-parts will be automatically deducted from stock.</p>
     <div class="form-grid">
       <div class="form-group">
         <label>Date</label>
@@ -285,22 +292,38 @@
 </div>
 
 <script>
-var API_URL = 'https://script.google.com/macros/s/AKfycbzaUoPWAzuII6OLkw2xfC4FqVUVVd6lU7psUZjtTGgO5SQ4M8_1ujuBmxGEdxyhwVcEMg/exec';
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+var API_URL = 'https://script.google.com/macros/s/AKfycbxETxAn7_S1Zl4eQ-xcm_zYvWeU0bjGM5nZ5JH1mR1LACsdPQd2PRXEXjoUkywyfkwnsw/exec';
 
 window.onload = function() {
   var today = new Date().toISOString().split('T')[0];
   document.getElementById('txn-date').value = today;
   document.getElementById('bj-date').value = today;
-  refreshAll();
+
+  if (!API_URL) {
+    document.getElementById('config-banner').style.display = 'block';
+  } else {
+    refreshAll();
+  }
 };
 
-function showPage(id, el) {
+function saveApiUrl() {
+  var url = document.getElementById('api-url-input').value.trim();
+  if (!url) return;
+  API_URL = url;
+  document.getElementById('config-banner').style.display = 'none';
+  refreshAll();
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────────────────────
+function showPage(id) {
   document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
   document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
   document.getElementById('page-' + id).classList.add('active');
-  el.classList.add('active');
+  event.target.classList.add('active');
 }
 
+// ── API CALLS ─────────────────────────────────────────────────────────────────
 function apiGet(action, callback) {
   fetch(API_URL + '?action=' + action)
     .then(function(r) { return r.json(); })
@@ -309,29 +332,30 @@ function apiGet(action, callback) {
 }
 
 function apiPost(data, callback) {
-  fetch(API_URL, { method: 'POST', body: JSON.stringify(data) })
+  fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify(data)
+  })
     .then(function(r) { return r.json(); })
     .then(callback)
     .catch(function(e) { console.error('POST error', e); });
 }
 
-var cache = {};
-
+// ── REFRESH ALL ───────────────────────────────────────────────────────────────
 function refreshAll() {
   loadStock();
   loadCapacity();
   loadMaster();
   loadRegister();
-  loadBackJaliDashboard();
+  loadBackJaliRegister();
 }
 
 // ── STOCK ─────────────────────────────────────────────────────────────────────
 function loadStock() {
   apiGet('getStock', function(data) {
     if (data.error) return;
-    cache.stock = data.rows;
     renderStock(data.rows);
-    renderDashboard(data.rows);
+    renderDashboardStats(data.rows);
   });
 }
 
@@ -347,14 +371,14 @@ function renderStock(rows) {
   });
 }
 
-function renderDashboard(rows) {
+function renderDashboardStats(rows) {
   var total = rows.length;
   var outOfStock = rows.filter(function(r){ return (r[4]||0) <= 0; }).length;
   var low = rows.filter(function(r){ var s = r[4]||0; return s > 0 && s < 10; }).length;
   var ok = total - outOfStock - low;
 
   document.getElementById('stat-grid').innerHTML =
-    statCard('Total Sub-Parts', total, '') +
+    statCard('Total Parts', total, '') +
     statCard('OK', ok, 'green') +
     statCard('Low Stock', low, 'orange') +
     statCard('Out of Stock', outOfStock, 'red');
@@ -363,7 +387,7 @@ function renderDashboard(rows) {
   var tbody = document.querySelector('#low-stock-table tbody');
   tbody.innerHTML = '';
   if (lowRows.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="3" style="color:var(--green);text-align:center;padding:20px">✅ All parts adequately stocked</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="3" style="color:var(--green); text-align:center; padding:20px">✅ All parts adequately stocked</td></tr>';
   } else {
     lowRows.forEach(function(r) {
       var cur = r[4]||0;
@@ -377,62 +401,6 @@ function statCard(label, value, cls) {
   return '<div class="stat-card '+cls+'"><div class="label">'+label+'</div><div class="value">'+value+'</div></div>';
 }
 
-// ── BACKJALI DASHBOARD ────────────────────────────────────────────────────────
-function loadBackJaliDashboard() {
-  apiGet('getBackJaliRegister', function(data) {
-    if (data.error) {
-      document.getElementById('bj-summary-grid').innerHTML = '<p style="color:var(--muted);font-size:13px">No data yet</p>';
-      document.querySelector('#bj-history-table tbody').innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--muted)">No entries recorded yet</td></tr>';
-      return;
-    }
-
-    var rows = data.rows; // [TxnID, Date, MainPartCode, MainPartName, Qty, Remarks]
-
-    // Aggregate totals by part code
-    var totals = {};
-    var names  = {};
-    rows.forEach(function(r) {
-      var code = r[2] ? r[2].toString() : '';
-      var name = r[3] ? r[3].toString() : '';
-      var qty  = Number(r[4]) || 0;
-      if (!code) return;
-      totals[code] = (totals[code] || 0) + qty;
-      names[code]  = name;
-    });
-
-    // Summary cards
-    var grid = document.getElementById('bj-summary-grid');
-    var codes = Object.keys(totals);
-    if (codes.length === 0) {
-      grid.innerHTML = '<p style="color:var(--muted);font-size:13px;padding:8px">No entries recorded yet</p>';
-    } else {
-      grid.innerHTML = '';
-      codes.forEach(function(code) {
-        grid.innerHTML +=
-          '<div class="cap-card green-top">' +
-            '<div class="code">' + code + '</div>' +
-            '<div class="name">' + names[code] + '</div>' +
-            '<div class="can-make">' + totals[code] + '</div>' +
-            '<div class="unit">units made/produced</div>' +
-          '</div>';
-      });
-    }
-
-    // History table (most recent first, last 20)
-    var tbody = document.querySelector('#bj-history-table tbody');
-    tbody.innerHTML = '';
-    var recent = rows.slice().reverse().slice(0, 20);
-    if (recent.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--muted)">No entries recorded yet</td></tr>';
-    } else {
-      recent.forEach(function(r) {
-        var d = r[1] ? new Date(r[1]).toLocaleDateString('en-IN') : '';
-        tbody.innerHTML += '<tr><td>'+r[0]+'</td><td>'+d+'</td><td><b>'+r[2]+'</b></td><td>'+r[3]+'</td><td><b>'+r[4]+'</b></td><td>'+(r[5]||'')+'</td></tr>';
-      });
-    }
-  });
-}
-
 // ── CAPACITY ──────────────────────────────────────────────────────────────────
 function loadCapacity() {
   apiGet('getCapacity', function(data) {
@@ -440,24 +408,24 @@ function loadCapacity() {
     var grid = document.getElementById('capacity-grid');
     grid.innerHTML = '';
     data.rows.forEach(function(r) {
-      var code = r[0], name = r[1], can = r[2]||0;
+      var code = r[0], name = r[1], can = Number(r[2])||0;
       var cls = can <= 0 ? 'zero' : '';
       grid.innerHTML += '<div class="cap-card '+cls+'"><div class="code">'+code+'</div><div class="name">'+name+'</div><div class="can-make">'+can+'</div><div class="unit">units can be made</div></div>';
     });
   });
 }
 
-// ── MASTER (dropdowns) ────────────────────────────────────────────────────────
+// ── MASTER (for dropdowns) ────────────────────────────────────────────────────
 function loadMaster() {
   apiGet('getMaster', function(data) {
     if (data.error) return;
-    cache.master = data.rows;
     var sel = document.getElementById('txn-part');
     sel.innerHTML = '';
     data.rows.forEach(function(r) {
       sel.innerHTML += '<option value="'+r[0]+'">'+r[0]+' — '+r[1]+'</option>';
     });
   });
+
   apiGet('getCapacity', function(data) {
     if (data.error) return;
     var sel = document.getElementById('bj-part');
@@ -468,13 +436,39 @@ function loadMaster() {
   });
 }
 
+// ── BACK JALI REGISTER ────────────────────────────────────────────────────────
+function loadBackJaliRegister() {
+  apiGet('getBackJaliRegister', function(data) {
+    if (data.error) return;
+    var rows = data.rows || [];
+
+    // Total produced
+    var total = rows.reduce(function(sum, r){ return sum + (Number(r[4])||0); }, 0);
+    document.getElementById('bj-total').innerHTML =
+      '<div class="stat-card green" style="display:inline-block; min-width:200px"><div class="label">Total Back Jali Produced</div><div class="value">'+total+'</div></div>';
+
+    // Recent table (last 10)
+    var tbody = document.querySelector('#bj-recent-table tbody');
+    tbody.innerHTML = '';
+    var recent = rows.slice(-10).reverse();
+    if (recent.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--muted)">No records yet</td></tr>';
+    } else {
+      recent.forEach(function(r) {
+        var d = r[1] ? new Date(r[1]).toLocaleDateString('en-IN') : '';
+        tbody.innerHTML += '<tr><td>'+r[0]+'</td><td>'+d+'</td><td>'+r[2]+'</td><td>'+(r[3]||'')+'</td><td><b>'+r[4]+'</b></td><td>'+(r[5]||'')+'</td></tr>';
+      });
+    }
+  });
+}
+
 // ── REGISTER ─────────────────────────────────────────────────────────────────
 function loadRegister() {
   apiGet('getRegister', function(data) {
     if (data.error) return;
     var tbody = document.querySelector('#register-table tbody');
     tbody.innerHTML = '';
-    if (data.rows.length === 0) {
+    if (!data.rows || data.rows.length === 0) {
       tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--muted)">No transactions yet</td></tr>';
       return;
     }
@@ -482,28 +476,31 @@ function loadRegister() {
       var type = r[2];
       var badge = '<span class="badge '+(type==='IN'?'in':'out')+'">'+type+'</span>';
       var d = r[1] ? new Date(r[1]).toLocaleDateString('en-IN') : '';
-      tbody.innerHTML += '<tr><td>'+r[0]+'</td><td>'+d+'</td><td>'+badge+'</td><td>'+r[3]+'</td><td>'+r[4]+'</td><td>'+(r[5]||0)+'</td><td>'+(r[6]||0)+'</td><td>'+(r[7]||'')+'</td></tr>';
+      tbody.innerHTML += '<tr><td>'+r[0]+'</td><td>'+d+'</td><td>'+badge+'</td><td>'+r[3]+'</td><td>'+(r[4]||'')+'</td><td>'+(r[5]||0)+'</td><td>'+(r[6]||0)+'</td><td>'+(r[7]||'')+'</td></tr>';
     });
   });
 }
 
 // ── SUBMIT SUB TXN ────────────────────────────────────────────────────────────
 function submitSubTxn() {
-  var date = document.getElementById('txn-date').value;
-  var txnType = document.getElementById('txn-type').value;
+  var date        = document.getElementById('txn-date').value;
+  var txnType     = document.getElementById('txn-type').value;
   var subPartCode = document.getElementById('txn-part').value;
-  var qty = document.getElementById('txn-qty').value;
-  var remarks = document.getElementById('txn-remarks').value;
-  var msg = document.getElementById('txn-msg');
+  var qty         = document.getElementById('txn-qty').value;
+  var remarks     = document.getElementById('txn-remarks').value;
+  var msg         = document.getElementById('txn-msg');
 
-  if (!date || !subPartCode || !qty) { showMsg(msg, 'error', 'Please fill Date, Part, and Quantity.'); return; }
+  if (!date || !subPartCode || !qty) {
+    showMsg(msg, 'error', 'Please fill Date, Part, and Quantity.');
+    return;
+  }
 
   apiPost({ action: 'addSubTxn', date: date, txnType: txnType, subPartCode: subPartCode, qty: qty, remarks: remarks }, function(res) {
     if (res.success) {
       showMsg(msg, 'success', '✅ Saved! TxnID: ' + res.txnId);
       document.getElementById('txn-qty').value = '';
       document.getElementById('txn-remarks').value = '';
-      setTimeout(function(){ loadStock(); loadRegister(); }, 1000);
+      setTimeout(function(){ loadStock(); loadRegister(); }, 1500);
     } else {
       showMsg(msg, 'error', '❌ Error: ' + (res.error || 'Unknown'));
     }
@@ -512,20 +509,23 @@ function submitSubTxn() {
 
 // ── SUBMIT BACK JALI TXN ─────────────────────────────────────────────────────
 function submitBackJaliTxn() {
-  var date = document.getElementById('bj-date').value;
-  var code = document.getElementById('bj-part').value;
-  var qty  = document.getElementById('bj-qty').value;
+  var date    = document.getElementById('bj-date').value;
+  var code    = document.getElementById('bj-part').value;
+  var qty     = document.getElementById('bj-qty').value;
   var remarks = document.getElementById('bj-remarks').value;
-  var msg = document.getElementById('bj-msg');
+  var msg     = document.getElementById('bj-msg');
 
-  if (!date || !code || !qty) { showMsg(msg, 'error', 'Please fill Date, Part, and Quantity.'); return; }
+  if (!date || !code || !qty) {
+    showMsg(msg, 'error', 'Please fill Date, Part, and Quantity.');
+    return;
+  }
 
   apiPost({ action: 'addBackJaliTxn', date: date, mainPartCode: code, qty: qty, remarks: remarks }, function(res) {
     if (res.success) {
-      showMsg(msg, 'success', '✅ Saved! TxnID: ' + res.txnId);
+      showMsg(msg, 'success', '✅ Saved! TxnID: ' + res.txnId + ' — Sub-parts auto-deducted.');
       document.getElementById('bj-qty').value = '';
       document.getElementById('bj-remarks').value = '';
-      setTimeout(function(){ loadBackJaliDashboard(); }, 1000);
+      setTimeout(function(){ loadStock(); loadCapacity(); loadRegister(); loadBackJaliRegister(); }, 1500);
     } else {
       showMsg(msg, 'error', '❌ Error: ' + (res.error || 'Unknown'));
     }
@@ -536,7 +536,7 @@ function submitBackJaliTxn() {
 function showMsg(el, type, text) {
   el.className = 'msg ' + type;
   el.textContent = text;
-  setTimeout(function(){ el.className = 'msg'; }, 4000);
+  setTimeout(function(){ el.className = 'msg'; }, 5000);
 }
 
 function filterTable(tableId, query) {
