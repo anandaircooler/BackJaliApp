@@ -6,193 +6,174 @@
 <title>Back Jali Sub-Assembly App</title>
 <style>
   :root {
-    --blue: #1c4587;
-    --blue-light: #4a7fc1;
-    --green: #34a853;
-    --red: #ea4335;
-    --orange: #fbbc04;
-    --bg: #f4f6fb;
-    --card: #ffffff;
-    --text: #202124;
-    --muted: #5f6368;
-    --border: #dadce0;
+    --blue: #1c4587; --blue-light: #4a7fc1;
+    --green: #34a853; --red: #ea4335; --orange: #fbbc04;
+    --bg: #f4f6fb; --card: #ffffff; --text: #202124;
+    --muted: #5f6368; --border: #dadce0;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); padding-bottom: 70px; }
 
-  /* NAV */
+  /* TOP NAV */
   nav {
     background: var(--blue); color: #fff;
-    padding: 0 24px; display: flex; align-items: center;
-    justify-content: space-between; height: 56px;
+    padding: 0 16px; display: flex; align-items: center;
+    justify-content: space-between; height: 52px;
     position: sticky; top: 0; z-index: 100;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   }
-  nav .brand { font-size: 18px; font-weight: 700; letter-spacing: 0.5px; }
-  nav .tabs { display: flex; gap: 4px; }
-  nav .tab {
-    padding: 6px 16px; border-radius: 20px; cursor: pointer;
-    font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.75); transition: all 0.2s;
-  }
-  nav .tab:hover { background: rgba(255,255,255,0.15); color: #fff; }
-  nav .tab.active { background: rgba(255,255,255,0.25); color: #fff; }
+  nav .brand { font-size: 16px; font-weight: 700; }
   nav .refresh-btn {
-    background: rgba(255,255,255,0.15); border: none; color: #fff;
-    padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 13px;
+    background: rgba(255,255,255,0.2); border: none; color: #fff;
+    padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 13px; white-space: nowrap;
   }
-  nav .refresh-btn:hover { background: rgba(255,255,255,0.25); }
 
-  /* LAYOUT */
-  .page { display: none; padding: 24px; max-width: 1200px; margin: 0 auto; }
+  /* BOTTOM TAB BAR (mobile-first) */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+    background: #fff; border-top: 1px solid var(--border);
+    display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+  }
+  .bottom-nav::-webkit-scrollbar { display: none; }
+  .bnav-tab {
+    flex: 1; min-width: 72px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 8px 4px; cursor: pointer; border: none; background: none;
+    color: var(--muted); font-size: 10px; font-weight: 600;
+    transition: color 0.2s; white-space: nowrap; gap: 3px;
+  }
+  .bnav-tab .icon { font-size: 20px; }
+  .bnav-tab.active { color: var(--blue); }
+  .bnav-tab.active .icon { filter: none; }
+
+  /* PAGES */
+  .page { display: none; padding: 16px; max-width: 1000px; margin: 0 auto; }
   .page.active { display: block; }
 
   /* SECTION TITLE */
   .section-title {
-    font-size: 13px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1px; color: var(--muted); margin-bottom: 14px;
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--muted); margin-bottom: 12px; margin-top: 4px;
   }
 
-  /* CARDS */
-  .card { background: var(--card); border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 20px; }
-  .card h2 { font-size: 15px; font-weight: 600; color: var(--blue); margin-bottom: 16px; border-bottom: 2px solid var(--bg); padding-bottom: 8px; }
+  /* CARD */
+  .card { background: var(--card); border-radius: 12px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 16px; }
+  .card h2 { font-size: 14px; font-weight: 700; color: var(--blue); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid var(--bg); }
 
-  /* CAPACITY CARDS */
-  .capacity-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
+  /* CAPACITY GRID */
+  .cap-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
+  @media (min-width: 600px) { .cap-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 900px) { .cap-grid { grid-template-columns: repeat(6, 1fr); } }
+
   .cap-card {
-    background: var(--card); border-radius: 16px; padding: 22px 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 6px solid var(--green);
-    position: relative; overflow: hidden;
+    background: var(--card); border-radius: 14px; padding: 16px 14px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.08); border-left: 5px solid var(--green);
   }
   .cap-card.zero { border-left-color: var(--red); }
   .cap-card.low  { border-left-color: var(--orange); }
-  .cap-card .part-code { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
-  .cap-card .part-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 14px; line-height: 1.3; }
-  .cap-card .can-make-num { font-size: 52px; font-weight: 900; line-height: 1; color: var(--green); }
-  .cap-card.zero .can-make-num { color: var(--red); }
-  .cap-card.low  .can-make-num { color: var(--orange); }
-  .cap-card .can-make-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
-  .cap-card .bottleneck { font-size: 11px; color: var(--red); margin-top: 8px; font-style: italic; }
+  .cap-card .c-code { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .cap-card .c-name { font-size: 12px; font-weight: 600; color: var(--text); margin: 4px 0 10px; line-height: 1.3; }
+  .cap-card .c-num  { font-size: 44px; font-weight: 900; line-height: 1; color: var(--green); }
+  .cap-card.zero .c-num { color: var(--red); }
+  .cap-card.low  .c-num { color: var(--orange); }
+  .cap-card .c-label { font-size: 10px; color: var(--muted); margin-top: 3px; }
+  .cap-card .c-block { font-size: 10px; color: var(--red); margin-top: 6px; font-style: italic; }
 
-  /* LOW STOCK */
-  .alert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-bottom: 28px; }
-  .alert-card {
-    background: var(--card); border-radius: 12px; padding: 14px 16px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06); display: flex; align-items: center; gap: 14px;
+  /* STAT PILLS */
+  .stat-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+  @media (min-width: 500px) { .stat-row { grid-template-columns: repeat(4, 1fr); } }
+  .stat-pill {
+    background: var(--card); border-radius: 12px; padding: 12px 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-top: 3px solid var(--blue);
+  }
+  .stat-pill.green  { border-top-color: var(--green); }
+  .stat-pill.red    { border-top-color: var(--red); }
+  .stat-pill.orange { border-top-color: var(--orange); }
+  .stat-pill .s-label { font-size: 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; }
+  .stat-pill .s-val   { font-size: 24px; font-weight: 800; margin-top: 2px; }
+  .stat-pill.green  .s-val { color: var(--green); }
+  .stat-pill.red    .s-val { color: var(--red); }
+  .stat-pill.orange .s-val { color: var(--orange); }
+
+  /* ALERT CARDS */
+  .alert-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .alert-item {
+    background: var(--card); border-radius: 10px; padding: 12px 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06); display: flex; align-items: center; gap: 12px;
     border-left: 4px solid var(--orange);
   }
-  .alert-card.out { border-left-color: var(--red); }
-  .alert-card .icon { font-size: 22px; }
-  .alert-card .info { flex: 1; min-width: 0; }
-  .alert-card .info .code { font-size: 11px; color: var(--muted); }
-  .alert-card .info .name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .alert-card .stock-num { font-size: 24px; font-weight: 800; color: var(--orange); white-space: nowrap; }
-  .alert-card.out .stock-num { color: var(--red); }
-  .no-alerts { text-align: center; padding: 24px; color: var(--green); font-weight: 600; background: #e6f4ea; border-radius: 12px; margin-bottom: 28px; }
+  .alert-item.out { border-left-color: var(--red); }
+  .alert-item .a-icon { font-size: 20px; flex-shrink: 0; }
+  .alert-item .a-info { flex: 1; min-width: 0; }
+  .alert-item .a-code { font-size: 10px; color: var(--muted); }
+  .alert-item .a-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .alert-item .a-stock { font-size: 22px; font-weight: 800; color: var(--orange); flex-shrink: 0; }
+  .alert-item.out .a-stock { color: var(--red); }
+  .no-alerts { text-align: center; padding: 20px; color: var(--green); font-weight: 600; background: #e6f4ea; border-radius: 12px; margin-bottom: 20px; font-size: 14px; }
 
   /* TABLE */
-  .table-wrap { overflow-x: auto; }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { background: var(--blue); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; position: sticky; top: 56px; z-index: 5; }
-  td { padding: 9px 12px; border-bottom: 1px solid var(--border); }
+  th { background: var(--blue); color: #fff; padding: 9px 10px; text-align: left; font-weight: 600; position: sticky; top: 52px; }
+  td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
   tr:hover td { background: #f8f9ff; }
-  .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
-  .badge.ok   { background: #e6f4ea; color: var(--green); }
-  .badge.low  { background: #fef7e0; color: #b07c00; }
-  .badge.out  { background: #fce8e6; color: var(--red); }
-  .badge.in   { background: #e6f4ea; color: var(--green); }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .badge.ok     { background: #e6f4ea; color: var(--green); }
+  .badge.low    { background: #fef7e0; color: #b07c00; }
+  .badge.out    { background: #fce8e6; color: var(--red); }
+  .badge.in     { background: #e6f4ea; color: var(--green); }
   .badge.outtxn { background: #fce8e6; color: var(--red); }
 
-  /* STAT ROW */
-  .stat-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
-  .stat-pill {
-    background: var(--card); border-radius: 12px; padding: 12px 20px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08); flex: 1; min-width: 140px;
-    border-top: 3px solid var(--blue);
-  }
-  .stat-pill.green { border-top-color: var(--green); }
-  .stat-pill.red   { border-top-color: var(--red); }
-  .stat-pill.orange{ border-top-color: var(--orange); }
-  .stat-pill .label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-  .stat-pill .value { font-size: 26px; font-weight: 800; margin-top: 2px; }
-  .stat-pill.green .value { color: var(--green); }
-  .stat-pill.red   .value { color: var(--red); }
-  .stat-pill.orange .value { color: var(--orange); }
-
   /* FORM */
-  .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
-  .form-group { display: flex; flex-direction: column; gap: 5px; }
-  label { font-size: 12px; font-weight: 600; color: var(--muted); }
-  input, select, textarea {
-    padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px;
-    font-size: 13px; color: var(--text); background: #fff; outline: none; transition: border 0.2s;
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 480px) { .form-grid { grid-template-columns: 1fr; } }
+  .form-group { display: flex; flex-direction: column; gap: 4px; }
+  .form-group.full { grid-column: 1 / -1; }
+  label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  input, select {
+    padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px;
+    font-size: 14px; color: var(--text); background: #fff; outline: none;
   }
   input:focus, select:focus { border-color: var(--blue); }
-  .btn { padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
-  .btn-primary { background: var(--blue); color: #fff; }
-  .btn-primary:hover { background: var(--blue-light); }
-  .btn-success { background: var(--green); color: #fff; }
-  .btn-success:hover { opacity: 0.9; }
-  .form-actions { margin-top: 16px; display: flex; gap: 12px; align-items: center; }
-  .msg { font-size: 13px; padding: 8px 14px; border-radius: 8px; display: none; }
+  .btn { padding: 12px 28px; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; font-weight: 700; }
+  .btn-success { background: var(--green); color: #fff; width: 100%; margin-top: 14px; }
+  .msg { font-size: 13px; padding: 10px 14px; border-radius: 8px; margin-top: 10px; display: none; }
   .msg.success { background: #e6f4ea; color: var(--green); display: block; }
   .msg.error   { background: #fce8e6; color: var(--red); display: block; }
 
-  /* SEARCH */
-  .search-bar { margin-bottom: 14px; }
-  .search-bar input { width: 100%; max-width: 360px; }
+  .search-bar { margin-bottom: 12px; }
+  .search-bar input { width: 100%; font-size: 14px; }
 
-  /* LOADING */
-  .loader { text-align: center; padding: 40px; color: var(--muted); font-size: 14px; }
-
-  @media (max-width: 600px) {
-    nav .tabs { display: none; }
-    .capacity-grid { grid-template-columns: repeat(2, 1fr); }
-  }
+  .loader { text-align: center; padding: 32px; color: var(--muted); font-size: 14px; }
 </style>
 </head>
 <body>
 
+<!-- TOP NAV -->
 <nav>
   <div class="brand">🏭 Back Jali Sub-Assembly</div>
-  <div class="tabs">
-    <div class="tab active" onclick="showPage('dashboard', this)">Dashboard</div>
-    <div class="tab" onclick="showPage('stock', this)">Stock</div>
-    <div class="tab" onclick="showPage('add-txn', this)">Add Stock</div>
-    <div class="tab" onclick="showPage('back-jali', this)">Back Jali OUT</div>
-    <div class="tab" onclick="showPage('register', this)">Register</div>
-  </div>
   <button class="refresh-btn" onclick="refreshAll()">⟳ Refresh</button>
 </nav>
 
 <!-- DASHBOARD -->
 <div id="page-dashboard" class="page active">
-
-  <!-- Capacity Section -->
   <div class="section-title">🔧 Can Make Now — Capacity</div>
-  <div id="capacity-grid" class="capacity-grid">
-    <div class="loader">Loading capacity...</div>
-  </div>
+  <div id="cap-grid" class="cap-grid"><div class="loader">Loading...</div></div>
 
-  <!-- Stock Summary Pills -->
-  <div class="section-title">📦 Sub-Part Stock Summary</div>
-  <div id="stat-row" class="stat-row">
-    <div class="loader">Loading...</div>
-  </div>
+  <div class="section-title">📦 Stock Summary</div>
+  <div id="stat-row" class="stat-row"><div class="loader">Loading...</div></div>
 
-  <!-- Low Stock Alerts -->
   <div class="section-title">⚠️ Low Stock Alerts</div>
-  <div id="alert-grid">
-    <div class="loader">Loading alerts...</div>
-  </div>
-
+  <div id="alert-list"><div class="loader">Loading...</div></div>
 </div>
 
 <!-- STOCK -->
 <div id="page-stock" class="page">
   <div class="card">
-    <h2>📦 Sub-Assembly Stock (All 40 Parts)</h2>
+    <h2>📦 All Sub-Parts Stock</h2>
     <div class="search-bar">
-      <input type="text" id="stock-search" placeholder="Search by code or name..." oninput="filterTable('stock-table', this.value)">
+      <input type="text" placeholder="Search..." oninput="filterTable('stock-table', this.value)">
     </div>
     <div class="table-wrap">
       <table id="stock-table">
@@ -203,23 +184,23 @@
   </div>
 </div>
 
-<!-- ADD TRANSACTION -->
-<div id="page-add-txn" class="page">
+<!-- ADD STOCK -->
+<div id="page-add" class="page">
   <div class="card">
-    <h2>➕ Add Sub-Assembly Stock Transaction</h2>
+    <h2>➕ Add Sub-Assembly Stock</h2>
     <div class="form-grid">
       <div class="form-group">
         <label>Date</label>
         <input type="date" id="txn-date">
       </div>
       <div class="form-group">
-        <label>Transaction Type</label>
+        <label>Type</label>
         <select id="txn-type">
-          <option value="IN">IN (Stock Received)</option>
-          <option value="OUT">OUT (Used / Issued)</option>
+          <option value="IN">IN — Stock Received</option>
+          <option value="OUT">OUT — Used / Issued</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="form-group full">
         <label>Sub Part</label>
         <select id="txn-part"></select>
       </div>
@@ -227,52 +208,48 @@
         <label>Quantity</label>
         <input type="number" id="txn-qty" min="1" placeholder="e.g. 100">
       </div>
-      <div class="form-group" style="grid-column: span 2">
-        <label>Remarks (optional)</label>
-        <input type="text" id="txn-remarks" placeholder="e.g. Received from supplier">
+      <div class="form-group">
+        <label>Remarks</label>
+        <input type="text" id="txn-rem" placeholder="Optional">
       </div>
     </div>
-    <div class="form-actions">
-      <button class="btn btn-success" onclick="submitSubTxn()">Save Transaction</button>
-      <div id="txn-msg" class="msg"></div>
-    </div>
+    <button class="btn btn-success" onclick="submitSubTxn()">Save Transaction</button>
+    <div id="txn-msg" class="msg"></div>
   </div>
 </div>
 
 <!-- BACK JALI OUT -->
-<div id="page-back-jali" class="page">
+<div id="page-bjout" class="page">
   <div class="card">
     <h2>🏗️ Back Jali Finished Goods OUT</h2>
-    <p style="font-size:13px; color:var(--muted); margin-bottom:16px;">Record when a completed Back Jali assembly is sent out. Sub-parts will be automatically deducted from stock.</p>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px;">Sub-parts will be automatically deducted from stock.</p>
     <div class="form-grid">
       <div class="form-group">
         <label>Date</label>
         <input type="date" id="bj-date">
       </div>
       <div class="form-group">
-        <label>Main Part (Jali Type)</label>
-        <select id="bj-part"></select>
-      </div>
-      <div class="form-group">
         <label>Quantity</label>
         <input type="number" id="bj-qty" min="1" placeholder="e.g. 50">
       </div>
-      <div class="form-group">
-        <label>Remarks (optional)</label>
-        <input type="text" id="bj-remarks" placeholder="e.g. Dispatched to factory">
+      <div class="form-group full">
+        <label>Jali Type</label>
+        <select id="bj-part"></select>
+      </div>
+      <div class="form-group full">
+        <label>Remarks</label>
+        <input type="text" id="bj-rem" placeholder="Optional">
       </div>
     </div>
-    <div class="form-actions">
-      <button class="btn btn-success" onclick="submitBackJaliTxn()">Save</button>
-      <div id="bj-msg" class="msg"></div>
-    </div>
+    <button class="btn btn-success" onclick="submitBackJaliTxn()">Save</button>
+    <div id="bj-msg" class="msg"></div>
   </div>
   <div class="card">
     <h2>📋 Recently Produced</h2>
     <div class="table-wrap">
-      <table id="bj-recent-table">
-        <thead><tr><th>TxnID</th><th>Date</th><th>Part</th><th>Part Name</th><th>Qty</th><th>Remarks</th></tr></thead>
-        <tbody><tr><td colspan="6" class="loader">Loading...</td></tr></tbody>
+      <table id="bj-table">
+        <thead><tr><th>TxnID</th><th>Date</th><th>Part</th><th>Qty</th><th>Remarks</th></tr></thead>
+        <tbody><tr><td colspan="5" class="loader">Loading...</td></tr></tbody>
       </table>
     </div>
   </div>
@@ -283,7 +260,7 @@
   <div class="card">
     <h2>📋 Sub-Assembly Transactions (Last 50)</h2>
     <div class="table-wrap">
-      <table id="register-table">
+      <table id="reg-table">
         <thead><tr><th>TxnID</th><th>Date</th><th>Type</th><th>Code</th><th>Name</th><th>IN</th><th>OUT</th><th>Remarks</th></tr></thead>
         <tbody><tr><td colspan="8" class="loader">Loading...</td></tr></tbody>
       </table>
@@ -291,10 +268,28 @@
   </div>
 </div>
 
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="bnav-tab active" id="bnav-dashboard" onclick="showPage('dashboard', 'bnav-dashboard')">
+    <span class="icon">📊</span>Dashboard
+  </button>
+  <button class="bnav-tab" id="bnav-stock" onclick="showPage('stock', 'bnav-stock')">
+    <span class="icon">📦</span>Stock
+  </button>
+  <button class="bnav-tab" id="bnav-add" onclick="showPage('add', 'bnav-add')">
+    <span class="icon">➕</span>Add Stock
+  </button>
+  <button class="bnav-tab" id="bnav-bjout" onclick="showPage('bjout', 'bnav-bjout')">
+    <span class="icon">🏗️</span>BJ OUT
+  </button>
+  <button class="bnav-tab" id="bnav-register" onclick="showPage('register', 'bnav-register')">
+    <span class="icon">📋</span>Register
+  </button>
+</div>
+
 <script>
-// ── CONFIG ────────────────────────────────────────────────────────────────────
 var API_URL = 'https://script.google.com/macros/s/AKfycbxETxAn7_S1Zl4eQ-xcm_zYvWeU0bjGM5nZ5JH1mR1LACsdPQd2PRXEXjoUkywyfkwnsw/exec';
-var LOW_STOCK_THRESHOLD = 20; // Show alert if stock <= this
+var LOW = 20;
 
 window.onload = function() {
   var today = new Date().toISOString().split('T')[0];
@@ -303,254 +298,206 @@ window.onload = function() {
   refreshAll();
 };
 
-// ── NAVIGATION ────────────────────────────────────────────────────────────────
-function showPage(id, el) {
-  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
-  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+function showPage(id, btnId) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.bnav-tab').forEach(function(t){ t.classList.remove('active'); });
   document.getElementById('page-' + id).classList.add('active');
-  if (el) el.classList.add('active');
+  if (btnId) document.getElementById(btnId).classList.add('active');
 }
 
-// ── API ───────────────────────────────────────────────────────────────────────
-function apiGet(action, callback) {
-  fetch(API_URL + '?action=' + action)
-    .then(function(r) { return r.json(); })
-    .then(callback)
-    .catch(function(e) { console.error(action, e); });
+function apiGet(action, cb) {
+  fetch(API_URL + '?action=' + action).then(function(r){ return r.json(); }).then(cb).catch(function(e){ console.error(action, e); });
+}
+function apiPost(data, cb) {
+  fetch(API_URL, { method: 'POST', body: JSON.stringify(data) }).then(function(r){ return r.json(); }).then(cb).catch(function(e){ console.error(e); });
 }
 
-function apiPost(data, callback) {
-  fetch(API_URL, { method: 'POST', body: JSON.stringify(data) })
-    .then(function(r) { return r.json(); })
-    .then(callback)
-    .catch(function(e) { console.error('POST', e); });
-}
-
-// ── REFRESH ───────────────────────────────────────────────────────────────────
 function refreshAll() {
   loadDashboard();
   loadStockTable();
-  loadMasterDropdowns();
+  loadDropdowns();
   loadRegister();
-  loadBackJaliRegister();
+  loadBJRegister();
 }
 
 // ── DASHBOARD ─────────────────────────────────────────────────────────────────
+var _cap = null, _stock = null, _bom = null;
 function loadDashboard() {
-  // Load capacity + stock in parallel
-  var capData = null, stockData = null;
-  function tryRender() {
-    if (capData && stockData) renderDashboard(capData, stockData);
-  }
-  apiGet('getCapacity', function(data) { if (!data.error) { capData = data.rows; tryRender(); } });
-  apiGet('getStock',    function(data) { if (!data.error) { stockData = data.rows; tryRender(); } });
+  _cap = null; _stock = null; _bom = null;
+  apiGet('getCapacity', function(d){ if (!d.error){ _cap = d.rows; tryRender(); }});
+  apiGet('getStock',    function(d){ if (!d.error){ _stock = d.rows; tryRender(); }});
+  apiGet('getBOM',      function(d){ if (!d.error){ _bom = d.rows;  tryRender(); }});
 }
+function tryRender() {
+  if (_cap && _stock && _bom) renderDashboard();
+}
+function renderDashboard() {
+  // Stock map
+  var sm = {};
+  _stock.forEach(function(r){ sm[r[0]] = Number(r[4])||0; });
 
-function renderDashboard(capRows, stockRows) {
-  // ── Capacity cards ──
-  var capGrid = document.getElementById('capacity-grid');
-  capGrid.innerHTML = '';
-
-  // Find bottleneck sub-part for each main part
-  apiGet('getBOM', function(bomData) {
-    var stockMap = {};
-    stockRows.forEach(function(r) { stockMap[r[0]] = Number(r[4]) || 0; });
-
-    capRows.forEach(function(r) {
-      var code = r[0], name = r[1], can = Number(r[2]) || 0;
-      var cls = can === 0 ? 'zero' : can < 10 ? 'low' : '';
-
-      // Find bottleneck (lowest stock/qty ratio in BOM)
-      var bottleneckText = '';
-      if (can < 10 && bomData && bomData.rows) {
-        var minRatio = Infinity, minPart = '';
-        bomData.rows.forEach(function(b) {
-          if (String(b[0]) !== String(code)) return;
-          var s = stockMap[b[1]] || 0;
-          var q = Number(b[2]) || 1;
-          var ratio = Math.floor(s / q);
-          if (ratio < minRatio) { minRatio = ratio; minPart = b[3] || b[1]; }
-        });
-        if (minPart) bottleneckText = '<div class="bottleneck">⚠️ Low: ' + minPart + ' (' + minRatio + ')</div>';
-      }
-
-      capGrid.innerHTML +=
-        '<div class="cap-card ' + cls + '">' +
-          '<div class="part-code">' + code + '</div>' +
-          '<div class="part-name">' + name + '</div>' +
-          '<div class="can-make-num">' + can + '</div>' +
-          '<div class="can-make-label">units can be made</div>' +
-          bottleneckText +
-        '</div>';
-    });
+  // Capacity cards
+  var capHTML = '';
+  _cap.forEach(function(r) {
+    var code = r[0], name = r[1], can = Number(r[2])||0;
+    var cls = can === 0 ? 'zero' : can < 10 ? 'low' : '';
+    var block = '';
+    if (can < 10) {
+      var minR = Infinity, minN = '';
+      _bom.forEach(function(b){
+        if (String(b[0]) !== String(code)) return;
+        var ratio = Math.floor((sm[b[1]]||0) / (Number(b[2])||1));
+        if (ratio < minR){ minR = ratio; minN = b[3]||b[1]; }
+      });
+      if (minN) block = '<div class="c-block">⚠️ ' + minN + ' (' + minR + ')</div>';
+    }
+    capHTML += '<div class="cap-card ' + cls + '">' +
+      '<div class="c-code">' + code + '</div>' +
+      '<div class="c-name">' + name + '</div>' +
+      '<div class="c-num">'  + can  + '</div>' +
+      '<div class="c-label">can be made</div>' +
+      block + '</div>';
   });
+  document.getElementById('cap-grid').innerHTML = capHTML;
 
-  // ── Summary pills ──
-  var total      = stockRows.length;
-  var outOfStock = stockRows.filter(function(r){ return (Number(r[4])||0) === 0; }).length;
-  var low        = stockRows.filter(function(r){ var s=Number(r[4])||0; return s>0 && s<=LOW_STOCK_THRESHOLD; }).length;
-  var ok         = total - outOfStock - low;
-
+  // Stat pills
+  var total = _stock.length;
+  var oos   = _stock.filter(function(r){ return (Number(r[4])||0)===0; }).length;
+  var low   = _stock.filter(function(r){ var s=Number(r[4])||0; return s>0&&s<=LOW; }).length;
+  var ok    = total - oos - low;
   document.getElementById('stat-row').innerHTML =
-    pill('Total Sub-Parts', total, '') +
-    pill('OK', ok, 'green') +
-    pill('Low Stock', low, 'orange') +
-    pill('Out of Stock', outOfStock, 'red');
+    pill('Total', total, '') + pill('OK', ok, 'green') + pill('Low', low, 'orange') + pill('Out', oos, 'red');
 
-  // ── Low stock alerts ──
-  var alertContainer = document.getElementById('alert-grid');
-  var lowParts = stockRows
-    .filter(function(r){ return (Number(r[4])||0) <= LOW_STOCK_THRESHOLD; })
-    .sort(function(a,b){ return (Number(a[4])||0) - (Number(b[4])||0); });
-
+  // Alerts
+  var lowParts = _stock.filter(function(r){ return (Number(r[4])||0)<=LOW; })
+    .sort(function(a,b){ return (Number(a[4])||0)-(Number(b[4])||0); });
   if (lowParts.length === 0) {
-    alertContainer.innerHTML = '<div class="no-alerts">✅ All sub-parts are adequately stocked</div>';
+    document.getElementById('alert-list').innerHTML = '<div class="no-alerts">✅ All parts adequately stocked</div>';
   } else {
-    alertContainer.innerHTML = '<div class="alert-grid">' +
-      lowParts.map(function(r) {
-        var stock = Number(r[4]) || 0;
-        var cls   = stock === 0 ? 'out' : '';
-        var icon  = stock === 0 ? '🔴' : '🟡';
-        return '<div class="alert-card ' + cls + '">' +
-          '<div class="icon">' + icon + '</div>' +
-          '<div class="info"><div class="code">' + r[0] + '</div><div class="name">' + r[1] + '</div></div>' +
-          '<div class="stock-num">' + stock + '</div>' +
-        '</div>';
-      }).join('') +
-    '</div>';
+    document.getElementById('alert-list').innerHTML = '<div class="alert-list">' +
+      lowParts.map(function(r){
+        var s = Number(r[4])||0;
+        return '<div class="alert-item ' + (s===0?'out':'') + '">' +
+          '<div class="a-icon">' + (s===0?'🔴':'🟡') + '</div>' +
+          '<div class="a-info"><div class="a-code">' + r[0] + '</div><div class="a-name">' + r[1] + '</div></div>' +
+          '<div class="a-stock">' + s + '</div></div>';
+      }).join('') + '</div>';
   }
 }
-
-function pill(label, value, cls) {
-  return '<div class="stat-pill ' + cls + '"><div class="label">' + label + '</div><div class="value">' + value + '</div></div>';
+function pill(l, v, c) {
+  return '<div class="stat-pill ' + c + '"><div class="s-label">' + l + '</div><div class="s-val">' + v + '</div></div>';
 }
 
 // ── STOCK TABLE ───────────────────────────────────────────────────────────────
 function loadStockTable() {
-  apiGet('getStock', function(data) {
-    if (data.error) return;
-    var tbody = document.querySelector('#stock-table tbody');
-    tbody.innerHTML = '';
-    data.rows.forEach(function(r) {
-      var cur = Number(r[4]) || 0;
-      var status = cur === 0     ? '<span class="badge out">Out of Stock</span>'
-                 : cur <= LOW_STOCK_THRESHOLD ? '<span class="badge low">Low</span>'
-                 : '<span class="badge ok">OK</span>';
-      tbody.innerHTML += '<tr><td><b>' + r[0] + '</b></td><td>' + r[1] + '</td><td>' + (r[2]||0) + '</td><td>' + (r[3]||0) + '</td><td><b>' + cur + '</b></td><td>' + status + '</td></tr>';
+  apiGet('getStock', function(d) {
+    if (d.error) return;
+    var tb = document.querySelector('#stock-table tbody');
+    tb.innerHTML = '';
+    d.rows.forEach(function(r) {
+      var s = Number(r[4])||0;
+      var b = s===0 ? '<span class="badge out">Out</span>'
+            : s<=LOW ? '<span class="badge low">Low</span>'
+            : '<span class="badge ok">OK</span>';
+      tb.innerHTML += '<tr><td><b>' + r[0] + '</b></td><td>' + r[1] + '</td><td>' + (r[2]||0) + '</td><td>' + (r[3]||0) + '</td><td><b>' + s + '</b></td><td>' + b + '</td></tr>';
     });
   });
 }
 
 // ── DROPDOWNS ─────────────────────────────────────────────────────────────────
-function loadMasterDropdowns() {
-  apiGet('getMaster', function(data) {
-    if (data.error) return;
+function loadDropdowns() {
+  apiGet('getMaster', function(d) {
+    if (d.error) return;
     var sel = document.getElementById('txn-part');
     sel.innerHTML = '';
-    data.rows.forEach(function(r) {
-      sel.innerHTML += '<option value="' + r[0] + '">' + r[0] + ' — ' + r[1] + '</option>';
-    });
+    d.rows.forEach(function(r){ sel.innerHTML += '<option value="' + r[0] + '">' + r[0] + ' — ' + r[1] + '</option>'; });
   });
-  apiGet('getCapacity', function(data) {
-    if (data.error) return;
+  apiGet('getCapacity', function(d) {
+    if (d.error) return;
     var sel = document.getElementById('bj-part');
     sel.innerHTML = '';
-    data.rows.forEach(function(r) {
-      sel.innerHTML += '<option value="' + r[0] + '">' + r[0] + ' — ' + r[1] + '</option>';
-    });
+    d.rows.forEach(function(r){ sel.innerHTML += '<option value="' + r[0] + '">' + r[0] + ' — ' + r[1] + '</option>'; });
   });
 }
 
-// ── BACK JALI REGISTER ────────────────────────────────────────────────────────
-function loadBackJaliRegister() {
-  apiGet('getBackJaliRegister', function(data) {
-    if (data.error) return;
-    var rows   = data.rows || [];
-    var recent = rows.slice(-10).reverse();
-    var tbody  = document.querySelector('#bj-recent-table tbody');
-    tbody.innerHTML = '';
-    if (recent.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--muted)">No records yet</td></tr>';
-    } else {
-      recent.forEach(function(r) {
-        var d = r[1] ? new Date(r[1]).toLocaleDateString('en-IN') : '';
-        tbody.innerHTML += '<tr><td>' + r[0] + '</td><td>' + d + '</td><td>' + r[2] + '</td><td>' + (r[3]||'') + '</td><td><b>' + r[4] + '</b></td><td>' + (r[5]||'') + '</td></tr>';
-      });
-    }
+// ── BJ REGISTER ───────────────────────────────────────────────────────────────
+function loadBJRegister() {
+  apiGet('getBackJaliRegister', function(d) {
+    if (d.error) return;
+    var rows = (d.rows||[]).slice(-10).reverse();
+    var tb = document.querySelector('#bj-table tbody');
+    tb.innerHTML = rows.length === 0
+      ? '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--muted)">No records yet</td></tr>'
+      : rows.map(function(r){
+          var dt = r[1] ? new Date(r[1]).toLocaleDateString('en-IN') : '';
+          return '<tr><td>' + r[0] + '</td><td>' + dt + '</td><td>' + r[2] + '</td><td><b>' + r[4] + '</b></td><td>' + (r[5]||'') + '</td></tr>';
+        }).join('');
   });
 }
 
-// ── REGISTER TABLE ────────────────────────────────────────────────────────────
+// ── REGISTER ─────────────────────────────────────────────────────────────────
 function loadRegister() {
-  apiGet('getRegister', function(data) {
-    if (data.error) return;
-    var tbody = document.querySelector('#register-table tbody');
-    tbody.innerHTML = '';
-    if (!data.rows || data.rows.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--muted)">No transactions yet</td></tr>';
+  apiGet('getRegister', function(d) {
+    if (d.error) return;
+    var tb = document.querySelector('#reg-table tbody');
+    if (!d.rows||d.rows.length===0) {
+      tb.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--muted)">No transactions yet</td></tr>';
       return;
     }
-    data.rows.forEach(function(r) {
-      var type  = r[2];
-      var badge = '<span class="badge ' + (type === 'IN' ? 'in' : 'outtxn') + '">' + type + '</span>';
-      var d     = r[1] ? new Date(r[1]).toLocaleDateString('en-IN') : '';
-      tbody.innerHTML += '<tr><td>' + r[0] + '</td><td>' + d + '</td><td>' + badge + '</td><td>' + r[3] + '</td><td>' + (r[4]||'') + '</td><td>' + (r[5]||0) + '</td><td>' + (r[6]||0) + '</td><td>' + (r[7]||'') + '</td></tr>';
-    });
+    tb.innerHTML = d.rows.map(function(r){
+      var b = '<span class="badge ' + (r[2]==='IN'?'in':'outtxn') + '">' + r[2] + '</span>';
+      var dt = r[1] ? new Date(r[1]).toLocaleDateString('en-IN') : '';
+      return '<tr><td>' + r[0] + '</td><td>' + dt + '</td><td>' + b + '</td><td>' + r[3] + '</td><td>' + (r[4]||'') + '</td><td>' + (r[5]||0) + '</td><td>' + (r[6]||0) + '</td><td>' + (r[7]||'') + '</td></tr>';
+    }).join('');
   });
 }
 
 // ── SUBMIT SUB TXN ────────────────────────────────────────────────────────────
 function submitSubTxn() {
-  var date  = document.getElementById('txn-date').value;
-  var type  = document.getElementById('txn-type').value;
-  var code  = document.getElementById('txn-part').value;
-  var qty   = document.getElementById('txn-qty').value;
-  var rem   = document.getElementById('txn-remarks').value;
-  var msg   = document.getElementById('txn-msg');
-  if (!date || !code || !qty) { showMsg(msg, 'error', 'Please fill Date, Part, and Quantity.'); return; }
-  apiPost({ action: 'addSubTxn', date: date, txnType: type, subPartCode: code, qty: qty, remarks: rem }, function(res) {
+  var date = document.getElementById('txn-date').value;
+  var type = document.getElementById('txn-type').value;
+  var code = document.getElementById('txn-part').value;
+  var qty  = document.getElementById('txn-qty').value;
+  var rem  = document.getElementById('txn-rem').value;
+  var msg  = document.getElementById('txn-msg');
+  if (!date||!code||!qty) { showMsg(msg,'error','Please fill Date, Part, and Quantity.'); return; }
+  apiPost({ action:'addSubTxn', date:date, txnType:type, subPartCode:code, qty:qty, remarks:rem }, function(res) {
     if (res.success) {
-      showMsg(msg, 'success', '✅ Saved! TxnID: ' + res.txnId);
+      showMsg(msg, 'success', '✅ Saved! ' + res.txnId);
       document.getElementById('txn-qty').value = '';
-      document.getElementById('txn-remarks').value = '';
+      document.getElementById('txn-rem').value = '';
       setTimeout(function(){ loadDashboard(); loadStockTable(); loadRegister(); }, 1500);
-    } else {
-      showMsg(msg, 'error', '❌ ' + (res.error || 'Unknown error'));
-    }
+    } else { showMsg(msg, 'error', '❌ ' + (res.error||'Unknown error')); }
   });
 }
 
-// ── SUBMIT BACK JALI ─────────────────────────────────────────────────────────
+// ── SUBMIT BJ TXN ─────────────────────────────────────────────────────────────
 function submitBackJaliTxn() {
   var date = document.getElementById('bj-date').value;
   var code = document.getElementById('bj-part').value;
   var qty  = document.getElementById('bj-qty').value;
-  var rem  = document.getElementById('bj-remarks').value;
+  var rem  = document.getElementById('bj-rem').value;
   var msg  = document.getElementById('bj-msg');
-  if (!date || !code || !qty) { showMsg(msg, 'error', 'Please fill Date, Part, and Quantity.'); return; }
-  apiPost({ action: 'addBackJaliTxn', date: date, mainPartCode: code, qty: qty, remarks: rem }, function(res) {
+  if (!date||!code||!qty) { showMsg(msg,'error','Please fill Date, Part, and Quantity.'); return; }
+  apiPost({ action:'addBackJaliTxn', date:date, mainPartCode:code, qty:qty, remarks:rem }, function(res) {
     if (res.success) {
-      showMsg(msg, 'success', '✅ Saved! TxnID: ' + res.txnId + ' — Sub-parts auto-deducted.');
+      showMsg(msg, 'success', '✅ Saved! ' + res.txnId + ' — Sub-parts deducted.');
       document.getElementById('bj-qty').value = '';
-      document.getElementById('bj-remarks').value = '';
-      setTimeout(function(){ loadDashboard(); loadStockTable(); loadRegister(); loadBackJaliRegister(); }, 1500);
-    } else {
-      showMsg(msg, 'error', '❌ ' + (res.error || 'Unknown error'));
-    }
+      document.getElementById('bj-rem').value = '';
+      setTimeout(function(){ loadDashboard(); loadStockTable(); loadRegister(); loadBJRegister(); }, 1500);
+    } else { showMsg(msg, 'error', '❌ ' + (res.error||'Unknown error')); }
   });
 }
 
 // ── UTILS ─────────────────────────────────────────────────────────────────────
 function showMsg(el, type, text) {
-  el.className = 'msg ' + type;
-  el.textContent = text;
-  setTimeout(function(){ el.className = 'msg'; }, 5000);
+  el.className = 'msg ' + type; el.textContent = text;
+  setTimeout(function(){ el.className='msg'; }, 5000);
 }
-
-function filterTable(tableId, query) {
-  var q = query.toLowerCase();
-  document.querySelectorAll('#' + tableId + ' tbody tr').forEach(function(row) {
-    row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+function filterTable(id, q) {
+  q = q.toLowerCase();
+  document.querySelectorAll('#' + id + ' tbody tr').forEach(function(r){
+    r.style.display = r.textContent.toLowerCase().includes(q) ? '' : 'none';
   });
 }
 </script>
