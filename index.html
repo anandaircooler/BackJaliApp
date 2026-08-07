@@ -28,24 +28,21 @@
     padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 13px; white-space: nowrap;
   }
 
-  /* BOTTOM TAB BAR (mobile-first) */
+  /* BOTTOM TAB BAR */
   .bottom-nav {
     position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
     background: #fff; border-top: 1px solid var(--border);
-    display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch;
-    box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+    display: flex; box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
   }
-  .bottom-nav::-webkit-scrollbar { display: none; }
   .bnav-tab {
-    flex: 1; min-width: 72px; display: flex; flex-direction: column;
+    flex: 1; display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     padding: 8px 4px; cursor: pointer; border: none; background: none;
     color: var(--muted); font-size: 10px; font-weight: 600;
-    transition: color 0.2s; white-space: nowrap; gap: 3px;
+    transition: color 0.2s; gap: 3px;
   }
   .bnav-tab .icon { font-size: 20px; }
   .bnav-tab.active { color: var(--blue); }
-  .bnav-tab.active .icon { filter: none; }
 
   /* PAGES */
   .page { display: none; padding: 16px; max-width: 1000px; margin: 0 auto; }
@@ -96,7 +93,7 @@
   .stat-pill.red    .s-val { color: var(--red); }
   .stat-pill.orange .s-val { color: var(--orange); }
 
-  /* ALERT CARDS */
+  /* ALERT LIST */
   .alert-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
   .alert-item {
     background: var(--card); border-radius: 10px; padding: 12px 14px;
@@ -115,7 +112,7 @@
   /* TABLE */
   .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { background: var(--blue); color: #fff; padding: 9px 10px; text-align: left; font-weight: 600; position: sticky; top: 52px; }
+  th { background: var(--blue); color: #fff; padding: 9px 10px; text-align: left; font-weight: 600; }
   td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
   tr:hover td { background: #f8f9ff; }
   .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
@@ -142,8 +139,9 @@
   .msg.success { background: #e6f4ea; color: var(--green); display: block; }
   .msg.error   { background: #fce8e6; color: var(--red); display: block; }
 
-  .search-bar { margin-bottom: 12px; }
-  .search-bar input { width: 100%; font-size: 14px; }
+  .search-wrap { margin-bottom: 12px; position: relative; }
+  .search-wrap input { width: 100%; font-size: 14px; padding-left: 36px; }
+  .search-wrap::before { content: '🔍'; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 14px; pointer-events: none; }
 
   .loader { text-align: center; padding: 32px; color: var(--muted); font-size: 14px; }
 </style>
@@ -172,8 +170,10 @@
 <div id="page-stock" class="page">
   <div class="card">
     <h2>📦 All Sub-Parts Stock</h2>
-    <div class="search-bar">
-      <input type="text" placeholder="Search..." oninput="filterTable('stock-table', this.value)">
+    <div class="search-wrap">
+      <input type="text" placeholder="Search by code or name..."
+             autocomplete="off" autocorrect="off" spellcheck="false"
+             oninput="filterTable('stock-table', this.value)">
     </div>
     <div class="table-wrap">
       <table id="stock-table">
@@ -206,11 +206,11 @@
       </div>
       <div class="form-group">
         <label>Quantity</label>
-        <input type="number" id="txn-qty" min="1" placeholder="e.g. 100">
+        <input type="number" id="txn-qty" min="1" placeholder="e.g. 100" autocomplete="off">
       </div>
       <div class="form-group">
         <label>Remarks</label>
-        <input type="text" id="txn-rem" placeholder="Optional">
+        <input type="text" id="txn-rem" placeholder="Optional" autocomplete="off">
       </div>
     </div>
     <button class="btn btn-success" onclick="submitSubTxn()">Save Transaction</button>
@@ -230,7 +230,7 @@
       </div>
       <div class="form-group">
         <label>Quantity</label>
-        <input type="number" id="bj-qty" min="1" placeholder="e.g. 50">
+        <input type="number" id="bj-qty" min="1" placeholder="e.g. 50" autocomplete="off">
       </div>
       <div class="form-group full">
         <label>Jali Type</label>
@@ -238,7 +238,7 @@
       </div>
       <div class="form-group full">
         <label>Remarks</label>
-        <input type="text" id="bj-rem" placeholder="Optional">
+        <input type="text" id="bj-rem" placeholder="Optional" autocomplete="off">
       </div>
     </div>
     <button class="btn btn-success" onclick="submitBackJaliTxn()">Save</button>
@@ -270,19 +270,19 @@
 
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
-  <button class="bnav-tab active" id="bnav-dashboard" onclick="showPage('dashboard', 'bnav-dashboard')">
+  <button class="bnav-tab active" id="bnav-dashboard" onclick="showPage('dashboard','bnav-dashboard')">
     <span class="icon">📊</span>Dashboard
   </button>
-  <button class="bnav-tab" id="bnav-stock" onclick="showPage('stock', 'bnav-stock')">
+  <button class="bnav-tab" id="bnav-stock" onclick="showPage('stock','bnav-stock')">
     <span class="icon">📦</span>Stock
   </button>
-  <button class="bnav-tab" id="bnav-add" onclick="showPage('add', 'bnav-add')">
+  <button class="bnav-tab" id="bnav-add" onclick="showPage('add','bnav-add')">
     <span class="icon">➕</span>Add Stock
   </button>
-  <button class="bnav-tab" id="bnav-bjout" onclick="showPage('bjout', 'bnav-bjout')">
+  <button class="bnav-tab" id="bnav-bjout" onclick="showPage('bjout','bnav-bjout')">
     <span class="icon">🏗️</span>BJ OUT
   </button>
-  <button class="bnav-tab" id="bnav-register" onclick="showPage('register', 'bnav-register')">
+  <button class="bnav-tab" id="bnav-register" onclick="showPage('register','bnav-register')">
     <span class="icon">📋</span>Register
   </button>
 </div>
@@ -306,10 +306,14 @@ function showPage(id, btnId) {
 }
 
 function apiGet(action, cb) {
-  fetch(API_URL + '?action=' + action).then(function(r){ return r.json(); }).then(cb).catch(function(e){ console.error(action, e); });
+  fetch(API_URL + '?action=' + action)
+    .then(function(r){ return r.json(); }).then(cb)
+    .catch(function(e){ console.error(action, e); });
 }
 function apiPost(data, cb) {
-  fetch(API_URL, { method: 'POST', body: JSON.stringify(data) }).then(function(r){ return r.json(); }).then(cb).catch(function(e){ console.error(e); });
+  fetch(API_URL, { method: 'POST', body: JSON.stringify(data) })
+    .then(function(r){ return r.json(); }).then(cb)
+    .catch(function(e){ console.error(e); });
 }
 
 function refreshAll() {
@@ -332,12 +336,11 @@ function tryRender() {
   if (_cap && _stock && _bom) renderDashboard();
 }
 function renderDashboard() {
-  // Stock map
   var sm = {};
   _stock.forEach(function(r){ sm[r[0]] = Number(r[4])||0; });
 
   // Capacity cards
-  var capHTML = '';
+  var html = '';
   _cap.forEach(function(r) {
     var code = r[0], name = r[1], can = Number(r[2])||0;
     var cls = can === 0 ? 'zero' : can < 10 ? 'low' : '';
@@ -351,14 +354,13 @@ function renderDashboard() {
       });
       if (minN) block = '<div class="c-block">⚠️ ' + minN + ' (' + minR + ')</div>';
     }
-    capHTML += '<div class="cap-card ' + cls + '">' +
+    html += '<div class="cap-card ' + cls + '">' +
       '<div class="c-code">' + code + '</div>' +
       '<div class="c-name">' + name + '</div>' +
       '<div class="c-num">'  + can  + '</div>' +
-      '<div class="c-label">can be made</div>' +
-      block + '</div>';
+      '<div class="c-label">can be made</div>' + block + '</div>';
   });
-  document.getElementById('cap-grid').innerHTML = capHTML;
+  document.getElementById('cap-grid').innerHTML = html;
 
   // Stat pills
   var total = _stock.length;
@@ -366,11 +368,12 @@ function renderDashboard() {
   var low   = _stock.filter(function(r){ var s=Number(r[4])||0; return s>0&&s<=LOW; }).length;
   var ok    = total - oos - low;
   document.getElementById('stat-row').innerHTML =
-    pill('Total', total, '') + pill('OK', ok, 'green') + pill('Low', low, 'orange') + pill('Out', oos, 'red');
+    pill('Total',total,'') + pill('OK',ok,'green') + pill('Low',low,'orange') + pill('Out',oos,'red');
 
   // Alerts
-  var lowParts = _stock.filter(function(r){ return (Number(r[4])||0)<=LOW; })
-    .sort(function(a,b){ return (Number(a[4])||0)-(Number(b[4])||0); });
+  var lowParts = _stock
+    .filter(function(r){ return (Number(r[4])||0) <= LOW; })
+    .sort(function(a,b){ return (Number(a[4])||0) - (Number(b[4])||0); });
   if (lowParts.length === 0) {
     document.getElementById('alert-list').innerHTML = '<div class="no-alerts">✅ All parts adequately stocked</div>';
   } else {
@@ -384,7 +387,7 @@ function renderDashboard() {
       }).join('') + '</div>';
   }
 }
-function pill(l, v, c) {
+function pill(l,v,c) {
   return '<div class="stat-pill ' + c + '"><div class="s-label">' + l + '</div><div class="s-val">' + v + '</div></div>';
 }
 
@@ -463,11 +466,11 @@ function submitSubTxn() {
   if (!date||!code||!qty) { showMsg(msg,'error','Please fill Date, Part, and Quantity.'); return; }
   apiPost({ action:'addSubTxn', date:date, txnType:type, subPartCode:code, qty:qty, remarks:rem }, function(res) {
     if (res.success) {
-      showMsg(msg, 'success', '✅ Saved! ' + res.txnId);
+      showMsg(msg,'success','✅ Saved! ' + res.txnId);
       document.getElementById('txn-qty').value = '';
       document.getElementById('txn-rem').value = '';
       setTimeout(function(){ loadDashboard(); loadStockTable(); loadRegister(); }, 1500);
-    } else { showMsg(msg, 'error', '❌ ' + (res.error||'Unknown error')); }
+    } else { showMsg(msg,'error','❌ ' + (res.error||'Unknown error')); }
   });
 }
 
@@ -481,16 +484,16 @@ function submitBackJaliTxn() {
   if (!date||!code||!qty) { showMsg(msg,'error','Please fill Date, Part, and Quantity.'); return; }
   apiPost({ action:'addBackJaliTxn', date:date, mainPartCode:code, qty:qty, remarks:rem }, function(res) {
     if (res.success) {
-      showMsg(msg, 'success', '✅ Saved! ' + res.txnId + ' — Sub-parts deducted.');
+      showMsg(msg,'success','✅ Saved! ' + res.txnId + ' — Sub-parts deducted.');
       document.getElementById('bj-qty').value = '';
       document.getElementById('bj-rem').value = '';
       setTimeout(function(){ loadDashboard(); loadStockTable(); loadRegister(); loadBJRegister(); }, 1500);
-    } else { showMsg(msg, 'error', '❌ ' + (res.error||'Unknown error')); }
+    } else { showMsg(msg,'error','❌ ' + (res.error||'Unknown error')); }
   });
 }
 
 // ── UTILS ─────────────────────────────────────────────────────────────────────
-function showMsg(el, type, text) {
+function showMsg(el,type,text) {
   el.className = 'msg ' + type; el.textContent = text;
   setTimeout(function(){ el.className='msg'; }, 5000);
 }
